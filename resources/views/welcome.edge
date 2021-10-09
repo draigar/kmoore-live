@@ -1,0 +1,22 @@
+@layout('layouts/public')
+
+@section('content')
+  @include('layouts/partials/public/slider')
+  <div class="trackingSlot">
+    <form action="{{ route('public-tracking') }}" method="post">
+        {{ csrfField() }}
+        <fieldset>
+            <input type="text" class="wpcf7-text" name="track" id="contact-email" placeholder="Input your tracking code here">
+            <input type="submit" class="" value="send" />
+        </fieldset>
+    </form>
+  </div>
+  <div class="page-content parallax parallax01">
+    <div class="container">
+        <div class="row services-negative-top">
+            
+        </div><!-- .row end -->
+    </div><!-- .container end -->
+</div><!-- .page-content end -->
+
+@endsection

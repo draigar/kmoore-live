@@ -1,0 +1,36 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Send SMS</h5>
+            <form action="{{ route('store-sms') }}" method="POST">
+              {{ csrfField() }}
+                <div class="form-group">
+                    <label for="">Sender ID <small>Default is FredMac</small></label>
+                    <input type="text" name="sender_id" class="form-control" required value="K MOORE GL" placeholder="E.G Fredmac">
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.sender_id') ? flashMessages.get('errors.sender_id') : '' }} </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Phone Numbers <small>(Required unless if sending to group.)</small></label>
+                    <textarea type="text" class="form-control" style="height: 200px" name="numbers" id="exampleInputEmail1" aria-describedby="emailHelp" required placeholder="Required numbers to send to seperated by commas">{{consignorNumbers}}</textarea>
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.numbers') ? flashMessages.get('errors.numbers') : '' }} </small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Text Message <small>(Required)</small></label>
+                    <textarea type="text" class="form-control" style="height: 100px"  name="message" id="exampleInputEmail1" aria-describedby="emailHelp" required placeholder="Required message to send"></textarea>
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.message') ? flashMessages.get('errors.message') : '' }} </small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection

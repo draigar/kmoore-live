@@ -1,0 +1,123 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Book Shipment</h5>
+            <form action="{{ route('update-shipments', { id: allShipments.id }) }}" method="POST" >
+              {{ csrfField() }}
+
+              @if(allShipments.status === 0)
+              <div class="form-group">
+                <label for="exampleInputEmail1">Select Consignors</label>
+                <select class="js-states form-control" tabindex="-1" name="consignors" style="display: none; width: 100%" multiple="multiple">
+                  <optgroup label="Current active consignors">
+                      @each(item in allConsignors)
+                        @if(allShipments.consignors.includes(item.id))
+                          <option selected="selected" value="{{ item.id }}">{{ item.first_name }} {{ item.last_name }} - {{ item.phone_number }}</option>
+                        @else
+                          <option value="{{ item.id }}">{{ item.first_name }} {{ item.last_name }} - {{ item.phone_number }}</option>
+                        @endif  
+                      @else
+                        
+                      @endeach
+                  </optgroup>
+              </select>
+          
+                <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.consignment') ? flashMessages.get('errors.consignment') : '' }} </small>
+            </div>
+            <div class="form-group">
+                <label for="">From where</label>
+                <input type="text" required name="from" class="form-control" value="{{ allShipments.from }}" placeholder="Consignment current location">
+                <small id="emailHelp" class="form-text text-danger"> 
+                  {{ flashMessages.has('errors.from') ? 
+                  flashMessages.get('errors.from') : '' }} 
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="">To where</label>
+                <input type="text" required name="to" class="form-control" value="{{ allShipments.to }}" placeholder="Consignment destination">
+                <small id="emailHelp" class="form-text text-danger"> 
+                  {{ flashMessages.has('errors.to') ? 
+                  flashMessages.get('errors.to') : '' }} 
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="">Currency</label>
+                <select class="form-control" name="currency" id="">
+                  {{--  <option value="{{ allShipments.currency }}" selected>
+                  {{ allShipments.currency === 1 ? 'Naira' : allShipments.currency === 2 ? 'Dollars' :
+                   allShipments.currency === 3 ? 'Pounds' : 'Euro' }}
+                  </option>  --}}
+                  <option value="1">Naira</option>
+                  <option value="2">Dollars</option>
+                  <option value="3">Pounds</option>
+                  <option value="4">Euro</option>
+                </select>
+            </div>
+            <div class="form-group">
+              <label for="">Amount</label>
+              <input type="text" required name="amount" value="{{ flashMessages.get('amount') || allShipments.amount }}" class="form-control" placeholder="Shipment Total amount">
+              <small id="emailHelp" class="form-text text-danger"> 
+                {{ flashMessages.has('errors.amount') ? 
+                flashMessages.get('errors.amount') : '' }} 
+              </small>
+          </div>
+          {{--  <div class="form-group">
+              <label for="">Shipping Mark</label>
+              <input type="text" name="shipping_mark" class="form-control" placeholder="Shipment Mark">
+          </div>  --}}
+          <div class="form-group">
+              <label for="">Description of Goods</label>
+              <textarea type="text" name="goods_description" value="{{ allShipments.goods_description }}" class="form-control" placeholder="Goods description"></textarea>
+          </div>
+            <div class="form-group">
+                <label for="">Order Date</label>
+                <input type="date" required name="date_of_order" class="form-control" placeholder="Date if ordering">
+                <small id="emailHelp" class="form-text text-danger"> 
+                  {{ flashMessages.has('errors.date_of_order') ? 
+                  flashMessages.get('errors.date_of_order') : '' }} 
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="">Expected Date</label>
+                <input type="date" required name="expected_date" class="form-control" placeholder="Date to be expected">
+                <small id="emailHelp" class="form-text text-danger"> 
+                  {{ flashMessages.has('errors.expected_date') ? 
+                  flashMessages.get('errors.expected_date') : '' }} 
+                </small>
+            </div>
+              @endif
+
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Set Shipment Status 
+                        <small>(Currently set to {{ allShipments.status === 1 ? 'Order Placed' 
+                        : allShipments.status === 2 ? 'Processing' : allShipments.status === 3 ? 'On the way' 
+                        : allShipments.status === 4 ? 'Completted' : 'In Active' }})</small> 
+                    </label>
+                    <select name="status" class="form-control">
+                        <option value="0"> Set inactive </option>
+                        <option value="1"> Goods Shipped </option>
+                        <option value="2"> Goods on high sea </option>
+                        <option value="3"> Arrived at the port </option>
+                        <option value="4"> Discharged at the port </option>
+                        <option value="5"> Cleared </option>
+                        <option value="6"> Offloaded in the warehouse </option>
+                        <option value="7"> Delivered and signed </option>
+                      @endeach
+                    </select>
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.consignment') ? flashMessages.get('errors.consignment') : '' }} </small>
+                </div>
+
+                <input type="hidden" name="consignmentId" value="{{ allShipments.consignmentId }}" >
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection

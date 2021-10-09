@@ -1,0 +1,19 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12 mb-4">
+      <a href="{{ route('book-shipments') }}" class="float-right">
+        <button type="button" class="btn btn-primary">Book Shipment</button>
+      </a>
+    </div>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          @include('dashboard/shipments/shipmentsTable') 
+        </div>  
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection

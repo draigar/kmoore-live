@@ -1,0 +1,107 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12 mb-4">
+      <a href="{{ route('collections') }}" class="float-right">
+        <button type="button" class="btn btn-primary">Create Collections</button>
+      </a>
+    </div>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            @if(dt)
+              <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Shipping Mark</th>
+                        <th scope="col">Consignor phone number</th>
+                        <th scope="col">Shipment code</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">CBM</th>
+                        <th scope="col">Fright Charge</th>
+                        <th scope="col">Description of Goods</th>
+                        <th scope="col">Collection date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @each(dt in dt)
+                    <tr>
+                      <th scope="row">{{ dt.id }}</th>
+                      <td> {{ dt.consignor.first_name }}  {{ dt.consignor.last_name }} </td>
+                      <td>{{ dt.consignor.phone_number }} </td>
+                      <td>{{{ dt.shipments.tracking }}} </td>
+                      <td> {{ dt.description }} </td>
+                      <td> {{ dt.qty }} </td>
+                      <td> {{ dt.cbm }} </td>
+                      <td> {{ dt.fright_charge }} </td>
+                      <td> {{ dt.shipments.goods_description }} </td>
+                      <td>{{ dt.date_of_collection }}</td>
+                      <td>
+                        {{--  <a class="clickToPrint btn btn-sm btn-primary " data-print-data="{{ dt.dataForPrint.printable }}" data-print-prop="{{ dt.dataForPrint.properties }}" href="javascript:;">Print</a>  --}}
+                        {{--  <form id="delete" action="{{ route('printSingleCollectedShipments', { id: dt.id }) }}" method="post">
+                          {{ csrfField() }}
+                          <button class="btn btn-sm btn-danger" type="submit">
+                            Print
+                          </button>
+                        </form>  --}}
+                      </td>
+                    </tr>
+                    @else
+                    <p> No collections created </p>
+                  @endeach
+                </tbody>
+            </table>
+            @else
+              <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Consignment Name</th>
+                        <th scope="col">Container Code</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">No of Consignors</th>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Order Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @each(dt in data)
+                    <tr>
+                      <th scope="row">{{ dt.id }}</th>
+                      <td><a href="{{ route('collectedShipmentSingle', { tracking: dt.tracking_id }) }}">{{ dt.consignment_name }}</a></td>
+                      <td>{{ dt.tracking_id }} </td>
+                      <td> {{ dt.currency === 1 ? 'NGN' : dt.currency === 2 ? '$' : dt.currency === 3 ? '£' : '€' }} {{ dt.amount }} </td>
+                      <td>{{{ dt.consignors.length }}} </td>
+                      <td> {{ dt.from }} </td>
+                      <td> {{ dt.to }} </td>
+                      <td>{{ dt.date_of_order }}</td>
+                      <td>
+                        {{--  <form id="delete" action="{{ `delete-consignments/${consignment.id}` }}" method="post">
+                          {{ csrfField() }}
+                          <button class="btn btn-sm btn-danger" type="submit">
+                            Delete
+                          </button>
+                        </form>  --}}
+                      </td>
+                    </tr>
+                    @else
+                    <p> No collections created </p>
+                  @endeach
+                </tbody>
+            </table>
+            @endif
+          </div>  
+        </div>  
+      </div>  
+    </div>  
+  </div>      
+</div>
+
+@endsection

@@ -1,0 +1,70 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Create collection</h5>
+            <form action="{{ route('create-collections') }}" method="POST">
+              {{ csrfField() }}
+                <div class="form-group">
+                    <label for="">Choose shipment and consignor</label>
+                    <select class="form-control" name="shipments">
+                      @each(dt in data)
+                        <optgroup label="{{ `tracking code : (${dt.tracking_id})` }}">
+                            @each(item in dt.consignors)
+                            <option value="{{ dt.id }},{{ item.id }}">{{ item.first_name }} {{ item.last_name }}</option>
+                            @else
+                            <option value="0">No assigned consignors</option>    
+                            @endeach
+                        </optgroup>
+                      @else
+                        <option value="0">No available shipments</option>
+                      @endeach
+                    </select>
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.consignors') ? flashMessages.get('errors.consignors') : '' }} </small>
+                </div>
+                {{--  <div class="form-group">
+                    <label for="exampleInputPassword1">Choose shipment</label>
+                    <select class="form-control" name="shipment" id="exampleInputPassword1">
+                      @each(ship in shipments)
+                        <option value="{{ ship.id }}"> {{ ship.trackingId }}</option>
+                      @else
+                        <option value="0">No available consignors</option>
+                      @endeach
+                    </select>
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.shipments') ? flashMessages.get('errors.shipments') : '' }} </small>
+                </div>  --}}
+                <div class="form-group">
+                    <label for="">Quantity</label>
+                    <input type="number" name="qty" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">CBM</label>
+                    <input type="text" name="cbm" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Fright Charge</label>
+                    <input type="text" name="fright_charge" class="form-control" placeholder="Fright charge">
+                </div>
+                
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Description</label>
+                    <textarea type="text" class="form-control" name="description" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="State info about the collection"></textarea>
+                    {{--  <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.consignors') ? flashMessages.get('errors.consignors') : '' }} </small>  --}}
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Collections date</label>
+                    <input type="date" class="form-control" name="date" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.date') ? flashMessages.get('errors.date') : '' }} </small>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection

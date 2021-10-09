@@ -1,0 +1,46 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12 mb-4">
+      <a href="{{ route('create-sms') }}" class="float-right">
+        <button type="button" class="btn btn-primary">Send Sms</button>
+      </a>
+    </div>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          @if(data.length > 0)
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Message ID</th>
+                        <th scope="col">Sender ID</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @each(dt in data)
+                    <tr>
+                    <th scope="row">{{ dt.id }}</th>
+                    <td> {{ dt.message_id }} </td>
+                    <td>{{ dt.sender_id }} </td>
+                    <td>{{{ dt.message }}} </td>
+                    <td>
+                        <a class="clickToPrint btn btn-sm btn-primary" href="javascript:;">View Numbers</a>
+                    </td>
+                    </tr>
+                @endeach
+                </tbody>
+            </table>
+          @else
+          <p>You have not sent any sms yet</p>
+          @endif
+        </div>  
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection

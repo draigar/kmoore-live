@@ -1,0 +1,58 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12 mb-4">
+      {{--  <a href="{{ route('create-consignments') }}" class="float-right">
+        <button type="button" class="btn btn-primary">Create Consignment</button>
+      </a>  --}}
+    </div>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Consignment Name</th>
+                        {{--  <th scope="col">Consignor</th>  --}}
+                        <th scope="col">Status</th>
+                        {{--  <th scope="col">Created At</th>
+                        <th scope="col">Updated At</th>  --}}
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @each(consignment in data)
+                    <tr>
+                      <th scope="row">{{ consignment.id }}</th>
+                      <td>{{ consignment.name }}</td>
+                      {{--  <td>{{ consignment.consignor.first_name }}  {{ consignment.consignor.last_name }}</td>  --}}
+                      <td>{{ consignment.access === 1 ? 'Active' : 'In Active' }}</td>
+                      {{--  <td>{{ consignment.consignor.first_name }}</td>
+                      <td>Cell</td>  --}}
+                      @if(consignment.status === 0)
+                      <td>
+                        <a class="btn btn-sm btn-primary " href="{{ route('edit-consignments', { id: consignment.id }) }}">Edit</a>
+                        <form id="delete" action="{{ `delete-consignments/${consignment.id}` }}" method="post">
+                          {{ csrfField() }}
+                          <button class="btn btn-sm btn-danger" type="submit">
+                            Delete
+                          </button>
+                        </form>
+                      </td>
+                      @endif
+                    </tr>
+                    @else
+                    <p> No consignment created </p>
+                  @endeach
+                </tbody>
+            </table>
+          </div>  
+        </div>  
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection

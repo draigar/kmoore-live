@@ -1,0 +1,58 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12 mb-4">
+      <a href="{{ route('create-consignors') }}" class="float-right">
+        <button type="button" class="btn btn-primary">Create Consignor</button>
+      </a>
+    </div>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col">Updated At</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @each(allConsignor in allConsignors)
+                    <tr>
+                      <th scope="row">{{ allConsignor.id }}</th>
+                      <td>{{ allConsignor.first_name }}</td>
+                      <td>{{ allConsignor.last_name }}</td>
+                      <td>{{ allConsignor.phone_number }}</td>
+                      <td>{{ allConsignor.access === 1 ? 'Active' : 'In Active' }}</td>
+                      <td>{{ allConsignor.created_at }}</td>
+                      <td>{{ allConsignor.updated_at }}</td>
+                      <td>
+                        <a class="btn btn-sm btn-primary " href="{{ `update-consignors/${allConsignor.id}` }}">Edit</a>
+                        <form id="delete" action="{{ `delete-consignors/${allConsignor.id}` }}" method="post">
+                          {{ csrfField() }}
+                          <button class="btn btn-sm btn-danger" type="submit">
+                            Delete
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                    @else
+                    <p>No consignor created </p>
+                  @endeach
+                </tbody>
+            </table>
+          </div>  
+        </div>  
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection

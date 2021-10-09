@@ -1,0 +1,67 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Track Shipments</h5>
+            <form class="" action="{{ route('tracking-shipments') }}" method="POST" >
+              {{ csrfField() }}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Place tracking code</label>
+                    <input type="text" name="code" class="form-control" placeholder="Consignment current location">
+                    <small id="emailHelp" class="form-text text-danger"> 
+                      {{ flashMessages.has('errors.from') ? 
+                      flashMessages.get('errors.from') : '' }} 
+                    </small>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+      </div>
+    </div>
+    @if(flashMessages.has('tracking'))
+    <div class="col-md-12">
+      <div class="card">
+          <div class="card-body">
+              <h5 class="card-title">{{ flashMessages.get('tracking.name') }}</h5>
+              <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Consignment Name</th>
+                            <th scope="col">From</th>
+                            <th scope="col">To</th>
+                            <th scope="col">Date of Order</th>
+                            <th scope="col">Expected Arival Date</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{ flashMessages.get('tracking.name') }}</td>
+                        <td>{{ flashMessages.get('tracking.from') }}</td>
+                        <td>{{ flashMessages.get('tracking.to') }}</td>
+                        <td>{{ flashMessages.get('tracking.date_of_order') }}</td>
+                        <td>{{ flashMessages.get('tracking.expected_date') }}</td>
+                        <td>{{ flashMessages.get('tracking.status') === 0 ? 'In Active' 
+                        : flashMessages.get('tracking.status') === 1 ? 'Goods Shipped' 
+                        : flashMessages.get('tracking.status') === 2 ? 'Goods on high sea' 
+                        : flashMessages.get('tracking.status') === 3 ? 'Arrived at the port' 
+                        : flashMessages.get('tracking.status') === 4 ? 'Discharge at the port' 
+                        : flashMessages.get('tracking.status') === 5 ? 'Cleared' 
+                        : flashMessages.get('tracking.status') === 6 ? 'Offloaded in the warehosue' 
+                        : flashMessages.get('tracking.status') === 7 ? 'Delivered and signed' : '' }}</td>
+                      </tr>
+                    </tbody>
+                </table>
+              </div> 
+          </div>
+      </div>
+    </div>
+    @endif
+  </div>
+</div>
+
+@endsection

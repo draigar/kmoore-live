@@ -1,0 +1,57 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Consignment Name</th>
+                {{--  <th scope="col">Consignor</th>  --}}
+                <th scope="col">Tracking ID</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Date of Order</th>
+                <th scope="col">Expected Arival Date</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Updated At</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+          @each(data in allShip)
+            <tr>
+              <th scope="row">{{ data.id }}</th>
+              <td>{{ data.consignment_name }}</td>
+              {{--  <td>{{ data.consignor.first_name }} {{ data.consignor.last_name }} </td>  --}}
+              <td class="text-muted">{{ data.tracking_code }}</td>
+              <td>{{ data.from }}</td>
+              <td>{{ data.to }}</td>
+              <td>{{ data.date_of_order }}</td>
+              <td>{{ data.expected_date }}</td>
+              <td>
+                {{ data.status === 0 ? 'In Active' 
+                  : data.status === 1 ? 'Goods Shipped' 
+                  : data.status === 2 ? 'Goods on high sea' 
+                  : data.status === 3 ? 'Arrived at the port' 
+                  : data.status === 4 ? 'Discharge at the port' 
+                  : data.status === 5 ? 'Cleared' 
+                  : data.status === 6 ? 'Offloaded in the warehosue' 
+                  : data.status === 7 ? 'Delivered and signed' : '' }}
+              </td>
+              <td>{{ data.created_at }}</td>
+              <td>{{ data.updated_at }}</td>
+              <td>
+                <a class="btn btn-sm btn-primary " href="{{ route('edit-shipments', { id: data.id }) }}">Edit</a>
+                <form id="delete" action="{{ `delete-shipments/${data.id}` }}" method="post">
+                  {{ csrfField() }}
+                  <button class="btn btn-sm btn-danger" type="submit">
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+          @else
+            <p> No shipments has been created </p>
+          @endeach
+        </tbody>
+    </table>
+  </div> 

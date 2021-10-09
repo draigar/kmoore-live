@@ -1,0 +1,32 @@
+<nav class="nav nav-pills  nav-fill">
+    <li class="nav-item">
+        <a class="nav-link {{ route('dashboard') === request.url() ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ route('consignors') === request.url() ? 'active' : '' }}" href="{{ route('consignors') }}">Consignors</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ route('consignments') === request.url() ? 'active' : '' }}" href="{{ route('consignments') }}">Consignments</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ route('shipments') === request.url() ? 'active' : '' }}" href="{{ route('shipments') }}">Shipments</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ route('book-shipments') === request.url() ? 'active' : '' }}" href="{{ route('book-shipments') }}">Book Shipment</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ route('tracking-shipments') === request.url() ? 'active' : '' }}" href="{{ route('trackingDashboard') }}">Track Shipments</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ route('users') === request.url() ? 'active' : '' }}" href="{{ route('users') }}">Users</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ route('users') === request.url() ? 'active' : '' }}" href="{{ route('collected') }}">Collected Shipments</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ route('sms') === request.url() ? 'active' : '' }}" href="{{ route('sms') }}">Sms</a>
+    </li>
+    {{--  <li class="nav-item">
+        <a class="nav-link {{ route('activities') === request.url() ? 'active' : '' }}" href="{{ route('activities') }}">Activities</a>
+    </li>  --}}
+</nav>

@@ -1,0 +1,23 @@
+<div id="footer-wrapper" class="footer-dark">
+    <div class="copyright-container" style="border:none">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>2020 © K-MOORE INTL LOGISTICS COMPANY</p>
+                </div><!-- .col-md-6 end -->
+
+                <div class="col-md-6">
+                    <p class="align-right">DESIGNED AND DEVELOPED BY <a href="#">CHEDDA SPRINGS.</a> 
+                        @if(auth.isLoggedIn)
+                            <a href="{{ route('dashboard') }}" style="color: #00bfff">{{ auth.user.username }}</a>  
+                        @else
+                            <a href="{{ route('login') }}" style="color: #00bfff">STAFF LOGIN</a>
+                        @endif
+                    </p>
+                </div><!-- .col-md-6 end -->
+            </div><!-- .row end -->
+        </div><!-- .container end -->
+    </div><!-- .copyright-container end -->
+
+    <a href="#" class="scroll-up">Scroll</a>
+</div><!-- #footer-wrapper end -->

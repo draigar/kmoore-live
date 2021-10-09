@@ -1,0 +1,33 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Create a consignor</h5>
+            <form action="{{ route('store-consignors') }}" method="POST">
+              {{ csrfField() }}
+                <div class="form-group">
+                    <label for="exampleInputEmail1">First Name</label>
+                    <input type="text" name="first_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Firstname">
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.first_name') ? flashMessages.get('errors.first_name') : '' }} </small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" id="exampleInputPassword1" placeholder="Enter Lastname">
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.last_name') ? flashMessages.get('errors.last_name') : '' }} </small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Phone Number</label>
+                    <input type="text" name="phone_number" class="form-control" id="exampleInputPassword1" placeholder="Enter Phone Number">
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.phone_number') ? flashMessages.get('errors.phone_number') : '' }} </small>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection

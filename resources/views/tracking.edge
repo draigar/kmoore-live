@@ -1,0 +1,92 @@
+@layout('layouts/public')
+
+@section('content')
+<!-- .page-title start -->
+<div class="page-title-style01 page-title-negative-top pt-bkg01 h500">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Trucking - Global Logistics Solutions</h1>
+
+                <div class="breadcrumb-container">
+                    <ul class="breadcrumb clearfix">
+                        <li>You are here:</li>
+
+                        <li>
+                            <a href="index-2.html">Home</a>
+                        </li>
+
+                        <li>
+                            <a href="about01.html">Tracking</a>
+                        </li>
+                    </ul><!-- .breadcrumb end -->
+                </div><!-- .breadcrumb-container end -->
+            </div><!-- .col-md-12 end -->
+        </div><!-- .row end -->
+    </div><!-- .container end -->
+</div><!-- .page-title-style01.page-title-negative-top end -->
+
+<div class="container">
+    <div class="row">
+        <div class="shipment-tracker">
+            <h1> Track Your Shipment </h1>
+            <p style="color: red"> {{ flashMessages.has('response') ? 
+                flashMessages.get('response.message') : '' }}  </p>
+            <div class="container">
+                <div class="row">
+                    <form action="{{ route('public-tracking') }}" method="post">
+                        {{ csrfField() }}
+                        <div class="col-md-9">
+                            <input type="search" name="track" id="" placeholder="Shipment id">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="submit" value="Search">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if(flashMessages.has('tracking'))
+<div class="container">
+    <div class="row">
+        <div class="shipment-tracker-2">
+            <div class="table__wrapper">
+                <table class="table" summary="This is a summary of your rad table contents.">
+                  <thead>
+                    <tr>
+                      <th scope="row">Date of Order</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">From</th>
+                      <th scope="col">To</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Expected arrival Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>{{ flashMessages.get('tracking.date_of_order') }}</td>
+                      <td>{{ flashMessages.get('tracking.name') }}</td>
+                      <td>{{ flashMessages.get('tracking.from') }}</td>
+                      <td>{{ flashMessages.get('tracking.to') }}</td>
+                      <td>{{ flashMessages.get('tracking.status') === 0 ? 'In Active' 
+                        : flashMessages.get('tracking.status') === 1 ? 'Goods Shipped' 
+                        : flashMessages.get('tracking.status') === 2 ? 'Goods on high sea' 
+                        : flashMessages.get('tracking.status') === 3 ? 'Arrived at the port' 
+                        : flashMessages.get('tracking.status') === 4 ? 'Discharge at the port' 
+                        : flashMessages.get('tracking.status') === 5 ? 'Cleared' 
+                        : flashMessages.get('tracking.status') === 6 ? 'Offloaded in the warehosue' 
+                        : flashMessages.get('tracking.status') === 7 ? 'Delivered and signed' : '' }}</td>
+                      <td>{{ flashMessages.get('tracking.expected_date') }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+        </div>
+    </div>
+</div>
+@endif
+  
+@endsection

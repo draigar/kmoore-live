@@ -1,0 +1,39 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Edit [{{ user.username }}]</h5>
+            <form action="{{ route('update-users', { id: user.id }) }}" method="POST">
+              {{ csrfField() }}
+                <div class="form-group">
+                    <label for="">Username</label>
+                    <input type="text" name="username" class="form-control" value="{{ user.username }}" placeholder="Enter Username">
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.username') ? flashMessages.get('errors.username') : '' }} </small>
+                </div>
+                <div class="form-group">
+                    <label for="">Email</label>
+                    <input type="text" class="form-control" disabled value="{{ user.email }}" placeholder="Enter Email">
+                </div>
+                <div class="form-group">
+                    <label for="">Password</label>
+                    <input type="text" name="password" class="form-control" placeholder="Enter Password">
+                    <small id="emailHelp" class="form-text text-danger"> {{ flashMessages.has('errors.password') ? flashMessages.get('errors.password') : '' }} </small>
+                </div>
+                <div class="form-group">
+                    <label for="">Active Status</label>
+                    <select name="status" class="form-control">
+                        <option value="1">Active</option>
+                        <option value="0">In Active</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection

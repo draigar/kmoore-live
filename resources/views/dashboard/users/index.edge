@@ -1,0 +1,54 @@
+@layout('layouts/dashboard')
+@section('content')
+<div class="container">
+  <div class="row">
+    <div class="col-xl-12 mb-4">
+      <a href="{{ route('create-users') }}" class="float-right">
+        <button type="button" class="btn btn-primary">Create Users</button>
+      </a>
+    </div>
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @each(data in users)
+                    <tr>
+                      <th scope="row">{{ data.id }}</th>
+                      <td>{{ data.username }}</td>
+                      <td>{{ data.email }}</td>
+                      <td>{{ data.access === 1 ? 'Active' : 'In Active' }}</td>
+                      <td>
+                        @if(data.id > 1)
+                        <a class="btn btn-sm btn-primary " href="{{ route('edit-users', { id: data.id }) }}">Edit</a>
+                        <form id="delete" action="{{ route('delete-user', { id: data.id }) }}" method="post">
+                          {{ csrfField() }}
+                          <button class="btn btn-sm btn-danger" type="submit">
+                            Delete
+                          </button>
+                        </form>
+                        @endif
+                      </td>
+                    </tr>
+                    @else
+                    <p>No user created </p>
+                  @endeach
+                </tbody>
+            </table>
+          </div>  
+        </div>  
+      </div>  
+    </div>  
+  </div>      
+</div>
+@endsection
